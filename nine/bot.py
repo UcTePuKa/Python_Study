@@ -28,13 +28,15 @@ def main():
         elif re.findall(r'^help', command.lower()):
             print(help_func())
         elif re.findall(r'^add', command.lower()):
-            add_func(command, contacts)
+            print(add_func(command, contacts))
         elif re.findall(r'^change', command.lower()):
-            change_func(command, contacts)
+            print(change_func(command, contacts))
         elif re.findall(r'^phone', command.lower()):
-            phone_func(command, contacts)
+            print(phone_func(command, contacts))
         elif re.findall(r'^show all', command.lower()):
             print(show_all_func(contacts))
+        else:
+            print(bad_command_func())
 
 def hello_func():
     return 'Hi! How can I help you?'
@@ -48,13 +50,22 @@ def add_func(command, contacts):
     new_data = command.split(' ')
     if new_data[1] in contacts:
         raise IndexError
+    elif re.findall(r'[^a-zA-Z]', new_data[1]) or re.findall(r'[^0-9-()]', new_data[2]):
+        raise ValueError
     else:
         contacts[new_data[1]] = new_data[2]
         return f'{new_data[1]}:{contacts[new_data[1]]}'
 
 
 def change_func(command, contacts):
-    pass
+    new_data = command.split(' ')
+    if new_data[1] not in contacts:
+        raise KeyError
+    elif re.findall(r'[0-9-()]', new_data[2]) == False:
+        raise ValueError
+    else:
+        contacts[new_data[1]] = new_data[2]
+        return f'{new_data[1]}:{contacts[new_data[1]]}'
 
 
 def phone_func(command, contacts):
@@ -65,6 +76,7 @@ def phone_func(command, contacts):
 def show_all_func(contacts):
     return contacts
 
+
 def help_func():
     return '''Бот принимает команды:
                   -"hello", отвечает в консоль "How can I help you?"
@@ -73,6 +85,10 @@ def help_func():
                   -"phone ...." По этой команде бот выводит в консоль номер телефона для указанного контакта.
                   -"show all". По этой команде бот выводит все сохраненные контакты с номерами телефонов в консоль.
                   -"good bye", "close", "exit" по любой из этих команд бот завершает свою роботу'''
+
+
+def bad_command_func():
+    raise TypeError
 
 
 if __name__ == '__main__':
