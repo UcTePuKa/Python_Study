@@ -1,5 +1,5 @@
 import re
-from Python_Study.nine.help_func import help_func
+from homework.nine.help_func import help_func
 
 
 def input_error(func):
@@ -22,10 +22,10 @@ def main():
     while True:
         command = input('Please input the command: ')
         if re.findall(r'\.|exit|close|good.bye', command.lower()):
-            print('Good bye!')
+            print(exit_func())
             break
         elif command.strip().lower() == 'hello':
-            print('Hi! How can I help you?')
+            print(hello_func())
         elif command.strip().lower() == 'help':
             print(help_func())
         elif re.findall(r'^add', command.lower()) or re.findall(r'^change', command.lower()):
@@ -35,15 +35,29 @@ def main():
         elif re.findall(r'^show all', command.lower()):
             print(contacts)
 
+def hello_func():
+    return 'Hi! How can I help you?'
+
+
+def exit_func():
+    return 'Good bye!'
+
+
 
 def add_change_func(command, contacts):
     new_data = command.split(' ')
-    contacts[new_data[1]] = new_data[2]
+    if new_data[1] in contacts:
+        raise IndexError
+    else:
+        contacts[new_data[1]] = new_data[2]
+        print(contacts)
 
 
 def phone_func(command, contacts):
     new_data = command.split(' ')
     print(contacts[new_data[1]])
+
+
 
 
 if __name__ == '__main__':
