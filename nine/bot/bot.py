@@ -7,13 +7,13 @@ def input_error(func):
         try:
             return func(*args, **kwargs)
         except KeyError:
-            return 'This contact doesnt exist, please try again.'
+            print('This contact doesnt exist, please try again.')
         except ValueError as exception:
-            return exception.args[0]
+            print(exception.args[0])
         except IndexError:
-            return 'This contact cannot be added, it exists already'
+            print('This contact cannot be added, it exists already')
         except TypeError:
-            return 'Unknown command or parametrs, please try again.'
+            print('Unknown command or parametrs, please try again.')
     return inner
 
 @input_error
@@ -26,7 +26,7 @@ def main():
             break
         elif re.findall(r'^hello', command.lower()):
             print(hello_func())
-        elif re.findall(r'^hello', command.lower()):
+        elif re.findall(r'^help', command.lower()):
             print(help_func())
         elif re.findall(r'^add', command.lower()):
             add_func(command, contacts)
@@ -45,7 +45,6 @@ def exit_func():
     return 'Good bye!'
 
 
-
 def add_func(command, contacts):
     new_data = command.split(' ')
     if new_data[1] in contacts:
@@ -53,6 +52,7 @@ def add_func(command, contacts):
     else:
         contacts[new_data[1]] = new_data[2]
         print(contacts)
+
 
 def change_func(command, contacts):
     pass
