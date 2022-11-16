@@ -5,7 +5,7 @@ from homework.nine.help_func import help_func
 def input_error(func):
     def inner(*args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            func(*args, **kwargs)
         except KeyError:
             print('This contact doesnt exist, please try again.')
         except ValueError as exception:
