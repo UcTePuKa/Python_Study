@@ -50,7 +50,7 @@ def add_func(command, contacts):
         raise IndexError
     else:
         contacts[new_data[1]] = new_data[2]
-        print(contacts)
+        return f'{new_data[1]}:{contacts[new_data[1]]}'
 
 
 def change_func(command, contacts):
