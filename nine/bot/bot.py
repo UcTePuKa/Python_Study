@@ -24,16 +24,18 @@ def main():
         if re.findall(r'\.|exit|close|good.bye', command.lower()):
             print(exit_func())
             break
-        elif command.strip().lower() == 'hello':
+        elif re.findall(r'^hello', command.lower()):
             print(hello_func())
-        elif command.strip().lower() == 'help':
+        elif re.findall(r'^hello', command.lower()):
             print(help_func())
-        elif re.findall(r'^add', command.lower()) or re.findall(r'^change', command.lower()):
-            add_change_func(command, contacts)
+        elif re.findall(r'^add', command.lower()):
+            add_func(command, contacts)
+        elif re.findall(r'^change', command.lower()):
+            change_func(command, contacts)
         elif re.findall(r'^phone', command.lower()):
             phone_func(command, contacts)
         elif re.findall(r'^show all', command.lower()):
-            print(contacts)
+            print(show_all_func(contacts))
 
 def hello_func():
     return 'Hi! How can I help you?'
@@ -44,7 +46,7 @@ def exit_func():
 
 
 
-def add_change_func(command, contacts):
+def add_func(command, contacts):
     new_data = command.split(' ')
     if new_data[1] in contacts:
         raise IndexError
@@ -52,12 +54,17 @@ def add_change_func(command, contacts):
         contacts[new_data[1]] = new_data[2]
         print(contacts)
 
+def change_func(command, contacts):
+    pass
+
 
 def phone_func(command, contacts):
     new_data = command.split(' ')
     print(contacts[new_data[1]])
 
 
+def show_all_func(contacts):
+    return contacts
 
 
 if __name__ == '__main__':
