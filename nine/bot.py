@@ -6,6 +6,7 @@ def input_error(func):
         while True:
             try:
                 func(*args, **kwargs)
+                break
             except KeyError:
                 print('This contact doesnt exist, please try again.')
             except ValueError as exception:
@@ -22,13 +23,14 @@ def main():
     command = input('Please input the command: ')
     if re.findall(r'\.|exit|close|good.bye', command.lower()):
         print(exit_func())
-        break
+        return -1
     elif re.findall(r'^hello', command.lower()):
         print(hello_func())
     elif re.findall(r'^help', command.lower()):
         print(help_func())
     elif re.findall(r'^add', command.lower()):
         print(add_func(command, contacts))
+        return add_func(command, contacts)
     elif re.findall(r'^change', command.lower()):
         print(change_func(command, contacts))
     elif re.findall(r'^phone', command.lower()):
