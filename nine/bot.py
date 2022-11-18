@@ -11,7 +11,7 @@ def input_error(func):
             except KeyError:
                 print('This contact doesnt exist, please try again.')
             except ValueError as exception:
-                print(exception.args[0])
+                print('Wrong input. Please enter name "space" number')
             except IndexError:
                 print('This contact cannot be added, it exists already')
             except TypeError:
@@ -63,7 +63,7 @@ def change_func(command, contacts):
     print(new_data)
     if new_data[1] not in contacts:
         raise KeyError
-    elif re.findall(r'[0-9-()]', new_data[2]) == False:
+    elif re.findall(r'[^0-9-()]', new_data[2]):
         raise ValueError
     else:
         contacts[new_data[1]] = new_data[2]
