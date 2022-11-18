@@ -3,40 +3,40 @@ import re
 
 def input_error(func):
     def inner(*args, **kwargs):
-        try:
-            func(*args, **kwargs)
-        except KeyError:
-            print('This contact doesnt exist, please try again.')
-        except ValueError as exception:
-            print(exception.args[0])
-        except IndexError:
-            print('This contact cannot be added, it exists already')
-        except TypeError:
-            print('Unknown command or parametrs, please try again.')
+        while True:
+            try:
+                func(*args, **kwargs)
+            except KeyError:
+                print('This contact doesnt exist, please try again.')
+            except ValueError as exception:
+                print(exception.args[0])
+            except IndexError:
+                print('This contact cannot be added, it exists already')
+            except TypeError:
+                print('Unknown command or parametrs, please try again.')
     return inner
 
 @input_error
 def main():
     contacts = {}
-    while True:
-        command = input('Please input the command: ')
-        if re.findall(r'\.|exit|close|good.bye', command.lower()):
-            print(exit_func())
-            break
-        elif re.findall(r'^hello', command.lower()):
-            print(hello_func())
-        elif re.findall(r'^help', command.lower()):
-            print(help_func())
-        elif re.findall(r'^add', command.lower()):
-            print(add_func(command, contacts))
-        elif re.findall(r'^change', command.lower()):
-            print(change_func(command, contacts))
-        elif re.findall(r'^phone', command.lower()):
-            print(phone_func(command, contacts))
-        elif re.findall(r'^show all', command.lower()):
-            print(show_all_func(contacts))
-        else:
-            print(bad_command_func())
+    command = input('Please input the command: ')
+    if re.findall(r'\.|exit|close|good.bye', command.lower()):
+        print(exit_func())
+        break
+    elif re.findall(r'^hello', command.lower()):
+        print(hello_func())
+    elif re.findall(r'^help', command.lower()):
+        print(help_func())
+    elif re.findall(r'^add', command.lower()):
+        print(add_func(command, contacts))
+    elif re.findall(r'^change', command.lower()):
+        print(change_func(command, contacts))
+    elif re.findall(r'^phone', command.lower()):
+        print(phone_func(command, contacts))
+    elif re.findall(r'^show all', command.lower()):
+        print(show_all_func(contacts))
+    else:
+        print(bad_command_func())
 
 def hello_func():
     return 'Hi! How can I help you?'
@@ -59,6 +59,7 @@ def add_func(command, contacts):
 
 def change_func(command, contacts):
     new_data = command.split(' ')
+    print(new_data)
     if new_data[1] not in contacts:
         raise KeyError
     elif re.findall(r'[0-9-()]', new_data[2]) == False:
