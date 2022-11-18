@@ -5,8 +5,9 @@ def input_error(func):
     def inner(*args, **kwargs):
         while True:
             try:
-                func(*args, **kwargs)
-                break
+                func_res = func(*args, **kwargs)
+                if func_res == -1:
+                    break
             except KeyError:
                 print('This contact doesnt exist, please try again.')
             except ValueError as exception:
@@ -19,7 +20,6 @@ def input_error(func):
 
 @input_error
 def main():
-    contacts = {}
     command = input('Please input the command: ')
     if re.findall(r'\.|exit|close|good.bye', command.lower()):
         print(exit_func())
@@ -91,6 +91,9 @@ def help_func():
 
 def bad_command_func():
     raise TypeError
+
+
+contacts = {}
 
 
 if __name__ == '__main__':
