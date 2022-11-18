@@ -30,7 +30,6 @@ def main():
         print(help_func())
     elif re.findall(r'^add', command.lower()):
         print(add_func(command, contacts))
-        return add_func(command, contacts)
     elif re.findall(r'^change', command.lower()):
         print(change_func(command, contacts))
     elif re.findall(r'^phone', command.lower()):
